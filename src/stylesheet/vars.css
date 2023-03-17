@@ -1,0 +1,10 @@
+:root {
+    --bg-body: #FFFFFF;
+    --primary: #FF8A00;
+    --text-color: #5C5C5C;
+    --acsent-color: #FFC000;
+    --success-color: #FF8A00;
+    --warning: #FF0000;
+    --font-raleway: 'Montserrat', sans-serif;
+    --transition: 500ms linear;
+}
