@@ -59,7 +59,7 @@ const Home: FC = () => {
                 key={id}
                 id={id}
                 skills={skills}
-                // video={courseVideoPreview.link}
+                video={courseVideoPreview.link}
                 {...props}
               />
             )

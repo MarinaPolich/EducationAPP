@@ -12,10 +12,23 @@ export const CardBox = styled.li`
 
 export const ThumbVideo = styled.div`
   width: 100%;
-  aspect-ratio: 303 / 208;
+  height: 170px;
+  aspect-ratio: 303 / 170;
   border-radius: 10px 10px 0 0;
   background-color: var(--bg-body);
   overflow: hidden;
+
+  &:hover {
+    & img,
+    & video {
+      transform: translateY(-170px);
+    }
+  }
+
+  & img,
+  & video {
+    transition: transform var(--transition);
+  }
 `;
 
 export const Image = styled.img`
@@ -28,7 +41,7 @@ export const Image = styled.img`
 
 export const InfoBox = styled.div`
   width: 100%;
-  height: calc(100% - 208px);
+  height: calc(100% - 170px);
   padding: 15px 30px;
   text-align: start;
   color: var(--bg-body);

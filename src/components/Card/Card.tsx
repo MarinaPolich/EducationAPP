@@ -2,6 +2,7 @@ import { FC, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { play } from "../../assets/img";
 import { getVideoTime } from "../../redux/currentUser/selectors";
+import { Player } from "../Player/Player";
 import { Progress } from "../Progress/Progress";
 import { RatingStar } from "../RatingStar/RatingStar";
 import {
@@ -22,7 +23,8 @@ type Props = {
   lessonsCount: number;
   rating: number;
   skills?: string[];
-  duration: number
+  duration: number;
+  video: string;
 };
 
 export const Card: FC<Props> = ({
@@ -32,19 +34,39 @@ export const Card: FC<Props> = ({
   lessonsCount,
   rating,
   skills,
-  duration
+  duration,
+  video,
 }) => {
   const image = previewImageLink ? `${previewImageLink}/cover.webp` : play;
   const lessonsPosition = useSelector(getVideoTime(id ?? ""));
   const educationTime = useMemo(() => {
-    if (!lessonsPosition)
-      return 0;
-    return Object.values(lessonsPosition).reduce((acc, item) => (acc + item))
+    if (!lessonsPosition) return 0;
+    return Object.values(lessonsPosition).reduce((acc, item) => acc + item);
   }, [lessonsPosition]);
+
+  const stopMovie = (e: any) => {
+    e.target.pause();
+  };
+
+  const playMovie = (e: any) => {
+    e.target.play();
+  };
+
   return (
     <CardBox>
       <ThumbVideo>
-        <Image src={image} title="photo cours" />
+        <Image src={image} title="photo course" />
+        <Player
+          onMouseOver={playMovie}
+          onMouseOut={stopMovie}
+          muted={true}
+          src={video}
+          poster={image}
+          preload="none"
+          width="100%"
+          height="170px"
+          loop
+        />
       </ThumbVideo>
       <InfoBox>
         <LinkTitle key={id} to={`/details/${id}`}>
