@@ -87,15 +87,28 @@ export const PaginationItem = styled.li`
   height: 60px;
   margin-right: 10px;
   padding-block: 20px;
-  background: linear-gradient(
-    253.58deg,
-    var(--acsent-color) 1.55%,
-    var(--success-color) 95.8%
-  );
+  background-color: var(--bg-body);
+  border: 1px solid #e0e0e0;
   border-radius: 100px;
-  color: var(--bg-body);
+  color: var(--text-color);
   text-align: center;
   font-weight: 500;
   font-size: 14px;
   line-height: 1.64;
+  transition: background-color var(--transition), color var(--transition),
+    border var(--transition);
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background: linear-gradient(
+      253.58deg,
+      var(--acsent-color) 1.55%,
+      var(--success-color) 95.8%
+    );
+    color: var(--bg-body);
+    border: 1px solid var(--acsent-color);
+  }
 `;

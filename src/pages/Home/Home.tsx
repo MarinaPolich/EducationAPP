@@ -25,8 +25,7 @@ const Home: FC = () => {
     const start = page * 10;
     const end = page * 10 + 10;
     return data?.slice(start, end) ?? [];
-  }, [data, page])
-  console.log(courses)
+  }, [data, page]);
   return (
     <>
       <HeroWraper>
@@ -49,15 +48,38 @@ const Home: FC = () => {
           </WraperHero>
         </Container>
       </HeroWraper>
+
       <Container>
         <TitleMain>Courses</TitleMain>
+
         <WraperCard>
-          {courses?.map(({ id, meta: { skills }, ...props }) => (
-            <Card key={id} id={id} skills={skills} {...props} />
-          ))}
+          {courses?.map(
+            ({ id, meta: { courseVideoPreview, skills }, ...props }) => (
+              <Card
+                key={id}
+                id={id}
+                skills={skills}
+                // video={courseVideoPreview.link}
+                {...props}
+              />
+            )
+          )}
         </WraperCard>
+
         <PaginationBox>
-          {[...new Array(Math.ceil((data?.length ?? 0) / 10))].map((_, index) => <PaginationItem key={index} className={index === page ? "active" : ""} onClick={() => { setPage(index) }}>{index + 1}</PaginationItem>)}
+          {[...new Array(Math.ceil((data?.length ?? 0) / 10))].map(
+            (_, index) => (
+              <PaginationItem
+                key={index}
+                className={index === page ? "active" : ""}
+                onClick={() => {
+                  setPage(index);
+                }}
+              >
+                {index + 1}
+              </PaginationItem>
+            )
+          )}
         </PaginationBox>
       </Container>
     </>

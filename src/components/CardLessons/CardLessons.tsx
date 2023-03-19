@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { play } from "../../assets/img";
+import { lock, play } from "../../assets/img";
 import {
   CardBox,
   ThumbVideo,
@@ -7,6 +7,8 @@ import {
   InfoBox,
   TitleCard,
   TextCard,
+  CardBoxUnActive,
+  ImageUnActive,
 } from "./CardLessons.styled";
 
 type Props = {
@@ -14,7 +16,7 @@ type Props = {
   title: string;
   previewImageLink: string;
   status: string;
-  onSelected: () => void
+  onSelected: () => void;
 };
 
 export const CardLessons: FC<Props> = ({
@@ -22,13 +24,28 @@ export const CardLessons: FC<Props> = ({
   title,
   previewImageLink,
   status,
-  onSelected
+  onSelected,
 }) => {
   const image = previewImageLink
     ? `${previewImageLink}/lesson-${order}.webp`
     : play;
-  return (
-    <CardBox onClick={() => status === "unlocked" && onSelected()}>
+
+  console.log("lock :>> ", { lock, play });
+  return status === "locked" ? (
+    <CardBoxUnActive>
+      <ThumbVideo>
+        <ImageUnActive src={lock} title="photo locked" />
+      </ThumbVideo>
+      <InfoBox>
+        <TitleCard>
+          <span>{order} </span>
+          {title}
+        </TitleCard>
+        <TextCard>{status}</TextCard>
+      </InfoBox>
+    </CardBoxUnActive>
+  ) : (
+    <CardBox onClick={onSelected}>
       <ThumbVideo>
         <Image src={image} title="photo cours" width={360} height={160} />
       </ThumbVideo>

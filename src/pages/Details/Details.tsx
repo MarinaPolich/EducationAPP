@@ -26,9 +26,8 @@ const Details: FC = () => {
   const lessonsPosition = useSelector(getVideoTime(courseId ?? ""));
   const dispatch = useDispatch();
   useEffect(() => {
-    if (details)
-      setSelectedLesson(details.lessons[0])
-  }, [details])
+    if (details) setSelectedLesson(details.lessons[0]);
+  }, [details]);
 
   return (
     <Container>
@@ -42,21 +41,35 @@ const Details: FC = () => {
             src={selectedLesson.link}
             autoPlay={false}
             controls={true}
-            startPosition={lessonsPosition && lessonsPosition[selectedLesson.id]}
+            startPosition={
+              lessonsPosition && lessonsPosition[selectedLesson.id]
+            }
             onChangePosition={(position) => {
-              dispatch(setVideoTime({ courseId, lessonId: details?.lessons[0].id, position }))
+              dispatch(
+                setVideoTime({
+                  courseId,
+                  lessonId: selectedLesson.id,
+                  position,
+                })
+              );
             }}
             width="100%"
             height="auto"
           />
         )}
-        <TitleLessons>{details?.lessons[0].title}</TitleLessons>
+        <TitleLessons>
+          <span>{selectedLesson?.order} </span> {selectedLesson?.title}
+        </TitleLessons>
       </PlayerThumba>
       <Title>{details?.title}</Title>
       <TextLessons>{details?.description}</TextLessons>
       <WraperCard>
         {details?.lessons.map(({ id, ...props }, index) => (
-          <CardLessons key={id} {...props} onSelected={() => setSelectedLesson(details.lessons[index])} />
+          <CardLessons
+            key={id}
+            {...props}
+            onSelected={() => setSelectedLesson(details.lessons[index])}
+          />
         ))}
       </WraperCard>
     </Container>

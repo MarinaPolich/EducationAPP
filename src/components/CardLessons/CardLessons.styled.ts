@@ -6,15 +6,21 @@ export const CardBox = styled.li`
   text-align: start;
   border: none;
   border-radius: 10px;
+  background-color: #000;
   box-shadow: 0px 12px 35px rgba(160, 121, 0, 0.2);
   overflow: hidden;
+  cursor: pointer;
+`;
+
+export const CardBoxUnActive = styled(CardBox)`
+  cursor: unset;
 `;
 
 export const ThumbVideo = styled.div`
   width: 100%;
   aspect-ratio: 360 / 160;
   border-radius: 10px 10px 0 0;
-  background-color: var(--bg-body);
+  background-color: var(--text-color);
   overflow: hidden;
 `;
 
@@ -23,6 +29,11 @@ export const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
+`;
+
+export const ImageUnActive = styled(Image)`
+  object-fit: contain;
   object-position: center center;
 `;
 
