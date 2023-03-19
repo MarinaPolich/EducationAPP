@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import { ReactSVG } from "react-svg";
 import { boy, hero_icon } from "../../assets/icon";
 import { Card } from "../../components/Card/Card";
@@ -19,10 +19,13 @@ import {
 
 const Home: FC = () => {
   const { data } = useGetCoursesQuery();
+  const [page, setPage] = useState(0);
 
-  const courses: CourseInfo[] = useMemo(() => {
-    return data?.slice(0, 10) ?? [];
-  }, [data]);
+  let courses: CourseInfo[] = useMemo(() => {
+    const start = page * 10;
+    const end = page * 10 + 10;
+    return data?.slice(start, end) ?? [];
+  }, [data, page])
   return (
     <>
       <HeroWraper>
@@ -53,10 +56,7 @@ const Home: FC = () => {
           ))}
         </WraperCard>
         <PaginationBox>
-          <PaginationItem>01</PaginationItem>
-          <PaginationItem>02</PaginationItem>
-          <PaginationItem>03</PaginationItem>
-          <PaginationItem>04</PaginationItem>
+          {[...new Array(Math.ceil((data?.length ?? 0) / 10))].map((_, index) => <PaginationItem key={index} className={index === page ? "active" : ""} onClick={() => { setPage(index) }}>{index + 1}</PaginationItem>)}
         </PaginationBox>
       </Container>
     </>

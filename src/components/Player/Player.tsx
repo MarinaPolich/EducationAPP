@@ -5,12 +5,16 @@ import { useEffect, useRef, useState } from "react";
 export interface PlayerProps extends VideoHTMLAttributes<HTMLVideoElement> {
   hlsConfig?: HlsConfig;
   src: string;
+  startPosition?: number
+  onChangePosition?: (position: number) => void
 }
 
 export const Player: FC<PlayerProps> = ({
   hlsConfig,
   src,
   autoPlay,
+  startPosition = -1,
+  onChangePosition = () => { },
   ...props
 }) => {
   const [supported, setSupported] = useState(false);
@@ -24,8 +28,12 @@ export const Player: FC<PlayerProps> = ({
       }
       const newHls = new Hls({
         enableWorker: false,
+        startPosition: startPosition,
         ...hlsConfig,
       });
+      newHls.on(Hls.Events.FRAG_CHANGED, (event, data) => {
+        onChangePosition(data.frag.start)
+      })
 
       newHls.on(Hls.Events.MEDIA_ATTACHED, () => {
         newHls.loadSource(src);
@@ -59,6 +67,7 @@ export const Player: FC<PlayerProps> = ({
       });
 
       if (playerRef.current != null) {
+
         newHls.attachMedia(playerRef.current);
       }
 

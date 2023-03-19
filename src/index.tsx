@@ -1,7 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { store } from './redux/store';
+import { persistor, store } from './redux/store';
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.styled.ts";
@@ -9,6 +9,7 @@ import "modern-normalize/modern-normalize.css";
 import { GlobalStyle } from "./index.styled";
 import "./stylesheet/vars.css";
 import { BrowserRouter } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -16,10 +17,12 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <GlobalStyle />
-        <App />
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <GlobalStyle />
+          <App />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

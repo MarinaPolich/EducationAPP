@@ -19,7 +19,7 @@ type Props = {
   previewImageLink: string;
   lessonsCount: number;
   rating: number;
-  skills: string[];
+  skills?: string[];
 };
 
 export const Card: FC<Props> = ({
@@ -47,7 +47,7 @@ export const Card: FC<Props> = ({
           <RatingStar value={rating} />
         </ProgressBox>
         <TextCard>
-          {skills.map((item, index) => (
+          {skills?.map((item, index) => (
             <li key={index}>{item}</li>
           ))}
         </TextCard>

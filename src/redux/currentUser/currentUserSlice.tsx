@@ -13,8 +13,8 @@ export const currentUserSlice = createSlice({
     name: 'currentUser',
     initialState,
     reducers: {
-        setVideoTime: (state, { payload: { courseId, ...data } }) => {
-            state.courses[courseId] = data;
+        setVideoTime: (state, { payload: { courseId, lessonId, position } }) => {
+            state.courses[courseId] = { ...state.courses[courseId], [lessonId]: position }
         }
     }
 });

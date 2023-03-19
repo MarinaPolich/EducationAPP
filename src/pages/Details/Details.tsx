@@ -15,10 +15,17 @@ import { ReactSVG } from "react-svg";
 import { Player } from "../../components/Player/Player";
 import { CardLessons } from "../../components/CardLessons/CardLessons";
 import { arrow } from "../../assets/icon";
+import { setVideoTime } from "../../redux/currentUser/currentUserSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getVideoTime } from "../../redux/currentUser/selectors";
 
 const Details: FC = () => {
   const { courseId } = useParams();
   const { data: details } = useGetCourseByIdQuery(courseId as string);
+
+  const lessonsPosition = useSelector(getVideoTime(courseId ?? ""));
+  console.log(lessonsPosition)
+  const dispatch = useDispatch();
   console.log("details :>> ", details);
   return (
     <Container>
@@ -32,6 +39,10 @@ const Details: FC = () => {
             src={details?.lessons[0].link}
             autoPlay={false}
             controls={true}
+            startPosition={lessonsPosition && lessonsPosition[details?.lessons[0].id]}
+            onChangePosition={(position) => {
+              dispatch(setVideoTime({ courseId, lessonId: details?.lessons[0].id, position }))
+            }}
             width="100%"
             height="auto"
           />
