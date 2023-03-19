@@ -1,22 +1,28 @@
 import { FC, useMemo } from "react";
-import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { boy, hero_icon } from "../../assets/icon";
+import { Card } from "../../components/Card/Card";
 import { CourseInfo, useGetCoursesQuery } from "../../redux/courses/courses";
 import {
   Container,
   HeroWraper,
   IconBox,
   IconHero,
+  PaginationBox,
+  PaginationItem,
   TitleBox,
   TitleHero,
+  TitleMain,
+  WraperCard,
   WraperHero,
 } from "./Home.styled";
 
 const Home: FC = () => {
   const { data } = useGetCoursesQuery();
 
-  const courses: CourseInfo[] = useMemo(() => { return data?.slice(0, 10) ?? [] }, [data]);
+  const courses: CourseInfo[] = useMemo(() => {
+    return data?.slice(0, 10) ?? [];
+  }, [data]);
   return (
     <>
       <HeroWraper>
@@ -40,20 +46,18 @@ const Home: FC = () => {
         </Container>
       </HeroWraper>
       <Container>
-        {courses?.map(({ id, title, previewImageLink, description, lessonsCount, rating, launchDate, meta: { skills, } }) =>
-        (<Link key={id} to={`/details/${id}`}>
-          <span>{title}</span>
-          <img src={`${previewImageLink}/cover.webp`} />
-          <span>{description}</span>
-          <br />
-          <span>{lessonsCount}</span>
-          <br />
-          <span>{rating}</span>
-          <br />
-          <span>{skills?.join(', ')}</span>
-          <br />
-          <span>{launchDate}</span>
-        </Link>))}
+        <TitleMain>Courses</TitleMain>
+        <WraperCard>
+          {courses?.map(({ id, meta: { skills }, ...props }) => (
+            <Card key={id} id={id} skills={skills} {...props} />
+          ))}
+        </WraperCard>
+        <PaginationBox>
+          <PaginationItem>01</PaginationItem>
+          <PaginationItem>02</PaginationItem>
+          <PaginationItem>03</PaginationItem>
+          <PaginationItem>04</PaginationItem>
+        </PaginationBox>
       </Container>
     </>
   );
