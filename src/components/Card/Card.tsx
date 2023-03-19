@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, MouseEvent, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { play } from "../../assets/img";
 import { getVideoTime } from "../../redux/currentUser/selectors";
@@ -44,12 +44,12 @@ export const Card: FC<Props> = ({
     return Object.values(lessonsPosition).reduce((acc, item) => acc + item);
   }, [lessonsPosition]);
 
-  const stopMovie = (e: any) => {
-    e.target.pause();
+  const stopMovie = (e: MouseEvent) => {
+    (e.target as HTMLVideoElement).pause();
   };
 
-  const playMovie = (e: any) => {
-    e.target.play();
+  const playMovie = (e: MouseEvent) => {
+    (e.target as HTMLVideoElement).play();
   };
 
   return (

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { LessonInfo, useGetCourseByIdQuery } from "../../redux/courses/courses";
 import {

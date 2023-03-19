@@ -29,8 +29,6 @@ export const CardLessons: FC<Props> = ({
   const image = previewImageLink
     ? `${previewImageLink}/lesson-${order}.webp`
     : play;
-
-  console.log("lock :>> ", { lock, play });
   return status === "locked" ? (
     <CardBoxUnActive>
       <ThumbVideo>
