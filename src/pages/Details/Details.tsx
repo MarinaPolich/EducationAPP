@@ -1,6 +1,6 @@
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetCourseByIdQuery } from "../../redux/courses/courses";
+import { LessonInfo, useGetCourseByIdQuery } from "../../redux/courses/courses";
 import {
   BackLink,
   Container,
@@ -22,11 +22,14 @@ import { getVideoTime } from "../../redux/currentUser/selectors";
 const Details: FC = () => {
   const { courseId } = useParams();
   const { data: details } = useGetCourseByIdQuery(courseId as string);
-
+  const [selectedLesson, setSelectedLesson] = useState<LessonInfo>();
   const lessonsPosition = useSelector(getVideoTime(courseId ?? ""));
-  console.log(lessonsPosition)
   const dispatch = useDispatch();
-  console.log("details :>> ", details);
+  useEffect(() => {
+    if (details)
+      setSelectedLesson(details.lessons[0])
+  }, [details])
+
   return (
     <Container>
       <PlayerThumba>
@@ -34,12 +37,12 @@ const Details: FC = () => {
           <ReactSVG src={arrow} width={27} height={16} title="decor" />{" "}
           <span>Courses</span>
         </BackLink>
-        {details?.lessons[0].link && (
+        {selectedLesson && (
           <Player
-            src={details?.lessons[0].link}
+            src={selectedLesson.link}
             autoPlay={false}
             controls={true}
-            startPosition={lessonsPosition && lessonsPosition[details?.lessons[0].id]}
+            startPosition={lessonsPosition && lessonsPosition[selectedLesson.id]}
             onChangePosition={(position) => {
               dispatch(setVideoTime({ courseId, lessonId: details?.lessons[0].id, position }))
             }}
@@ -52,8 +55,8 @@ const Details: FC = () => {
       <Title>{details?.title}</Title>
       <TextLessons>{details?.description}</TextLessons>
       <WraperCard>
-        {details?.lessons.map(({ id, ...props }) => (
-          <CardLessons key={id} {...props} />
+        {details?.lessons.map(({ id, ...props }, index) => (
+          <CardLessons key={id} {...props} onSelected={() => setSelectedLesson(details.lessons[index])} />
         ))}
       </WraperCard>
     </Container>

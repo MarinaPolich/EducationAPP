@@ -14,6 +14,7 @@ type Props = {
   title: string;
   previewImageLink: string;
   status: string;
+  onSelected: () => void
 };
 
 export const CardLessons: FC<Props> = ({
@@ -21,12 +22,13 @@ export const CardLessons: FC<Props> = ({
   title,
   previewImageLink,
   status,
+  onSelected
 }) => {
   const image = previewImageLink
     ? `${previewImageLink}/lesson-${order}.webp`
     : play;
   return (
-    <CardBox>
+    <CardBox onClick={() => status === "unlocked" && onSelected()}>
       <ThumbVideo>
         <Image src={image} title="photo cours" width={360} height={160} />
       </ThumbVideo>

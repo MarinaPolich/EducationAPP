@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface UserState {
-    courses: { [key: string]: any }
+    courses: { [key: string]: { [key: string]: number } }
 }
 
 

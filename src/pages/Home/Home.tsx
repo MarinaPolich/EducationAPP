@@ -26,6 +26,7 @@ const Home: FC = () => {
     const end = page * 10 + 10;
     return data?.slice(start, end) ?? [];
   }, [data, page])
+  console.log(courses)
   return (
     <>
       <HeroWraper>
